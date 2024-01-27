@@ -11,7 +11,7 @@ else:
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\67")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\66")
         buf.write("\7\4\2\t\2\3\2\3\2\3\2\2\2\3\2\2\2\2\5\2\4\3\2\2\2\4\5")
         buf.write("\3\2\2\2\5\3\3\2\2\2\2")
         return buf.getvalue()
@@ -27,16 +27,17 @@ class ZCodeParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "<INVALID>", "'number'", "'boolean'", 
-                     "'string'", "'=='", "'...'", "'>='", "'>'", "'<='", 
-                     "'<'", "'!='", "'<-'", "'='", "'or'", "'and'", "'not'", 
-                     "'%'", "'+'", "'-'", "'*'", "'/'", "'true'", "'false'", 
-                     "'('", "')'", "'['", "']'", "'{'", "'}'", "','", "'return'", 
-                     "'var'", "'dynamic'", "'func'", "'for'", "'until'", 
-                     "'by'", "'break'", "'continue'", "'if'", "'else'", 
-                     "'elif'", "'begin'", "'end'", "'''", "'\\'" ]
+    literalNames = [ "<INVALID>", "'number'", "'boolean'", "'string'", "'=='", 
+                     "'...'", "'>='", "'>'", "'<='", "'<'", "'!='", "'<-'", 
+                     "'='", "'or'", "'and'", "'not'", "'%'", "'+'", "'-'", 
+                     "'*'", "'/'", "'true'", "'false'", "'('", "')'", "'['", 
+                     "']'", "'{'", "'}'", "','", "'return'", "'var'", "'dynamic'", 
+                     "'func'", "'for'", "'until'", "'by'", "'break'", "'continue'", 
+                     "'if'", "'else'", "'elif'", "'begin'", "'end'", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
+                     "<INVALID>", "<INVALID>", "'\n'" ]
 
-    symbolicNames = [ "<INVALID>", "STRING", "NUM_TYPE", "BOOL_TYPE", "STRING_TYPE", 
+    symbolicNames = [ "<INVALID>", "NUM_TYPE", "BOOL_TYPE", "STRING_TYPE", 
                       "EQUAL_OPERATOR", "CONCAT_OPERATOR", "GE_OPERATOR", 
                       "G_OPERATOR", "LE_OPERATOR", "L_OPERATOR", "NE_OPERATOR", 
                       "ASSIGN1_OPERATOR", "ASSIGN2_OPERATOR", "OR_OPERATOR", 
@@ -46,68 +47,67 @@ class ZCodeParser ( Parser ):
                       "RSB", "LPT", "RPT", "COMMA", "RETURN_KEY", "VAR_KEY", 
                       "DYNAMIC_KEY", "FUNC_KEY", "FOR_KEY", "UNTIL_KEY", 
                       "BY_KEY", "BREAK_KEY", "CONTINUE_KEY", "IF_KEY", "ELSE_KEY", 
-                      "ELIF_KEY", "BEGIN_KEY", "END_KEY", "SINGLEQUOTE", 
-                      "BACKSLASH", "IDENTIFIERS", "NUMBER", "COMMENT", "WS", 
-                      "UNCLOSE_STRING", "ILLEGAL_ESCAPE", "ERROR_CHAR" ]
+                      "ELIF_KEY", "BEGIN_KEY", "END_KEY", "STRING", "IDENTIFIERS", 
+                      "COMMENT", "NUMBER", "WS", "UNCLOSE_STRING", "ILLEGAL_ESCAPE", 
+                      "NEWLINE", "ERROR_CHAR" ]
 
     RULE_program = 0
 
     ruleNames =  [ "program" ]
 
     EOF = Token.EOF
-    STRING=1
-    NUM_TYPE=2
-    BOOL_TYPE=3
-    STRING_TYPE=4
-    EQUAL_OPERATOR=5
-    CONCAT_OPERATOR=6
-    GE_OPERATOR=7
-    G_OPERATOR=8
-    LE_OPERATOR=9
-    L_OPERATOR=10
-    NE_OPERATOR=11
-    ASSIGN1_OPERATOR=12
-    ASSIGN2_OPERATOR=13
-    OR_OPERATOR=14
-    AND_OPERATOR=15
-    NOT_OPERATOR=16
-    MODULO_OPERATOR=17
-    ADD_OPERATOR=18
-    SUB_OPERATOR=19
-    MUL_OPERATOR=20
-    DIV_OPERATOR=21
-    TRUE_BOOLEAN=22
-    FALSE_BOOLEAN=23
-    LB=24
-    RB=25
-    LSB=26
-    RSB=27
-    LPT=28
-    RPT=29
-    COMMA=30
-    RETURN_KEY=31
-    VAR_KEY=32
-    DYNAMIC_KEY=33
-    FUNC_KEY=34
-    FOR_KEY=35
-    UNTIL_KEY=36
-    BY_KEY=37
-    BREAK_KEY=38
-    CONTINUE_KEY=39
-    IF_KEY=40
-    ELSE_KEY=41
-    ELIF_KEY=42
-    BEGIN_KEY=43
-    END_KEY=44
-    SINGLEQUOTE=45
-    BACKSLASH=46
-    IDENTIFIERS=47
-    NUMBER=48
-    COMMENT=49
-    WS=50
-    UNCLOSE_STRING=51
-    ILLEGAL_ESCAPE=52
-    ERROR_CHAR=53
+    NUM_TYPE=1
+    BOOL_TYPE=2
+    STRING_TYPE=3
+    EQUAL_OPERATOR=4
+    CONCAT_OPERATOR=5
+    GE_OPERATOR=6
+    G_OPERATOR=7
+    LE_OPERATOR=8
+    L_OPERATOR=9
+    NE_OPERATOR=10
+    ASSIGN1_OPERATOR=11
+    ASSIGN2_OPERATOR=12
+    OR_OPERATOR=13
+    AND_OPERATOR=14
+    NOT_OPERATOR=15
+    MODULO_OPERATOR=16
+    ADD_OPERATOR=17
+    SUB_OPERATOR=18
+    MUL_OPERATOR=19
+    DIV_OPERATOR=20
+    TRUE_BOOLEAN=21
+    FALSE_BOOLEAN=22
+    LB=23
+    RB=24
+    LSB=25
+    RSB=26
+    LPT=27
+    RPT=28
+    COMMA=29
+    RETURN_KEY=30
+    VAR_KEY=31
+    DYNAMIC_KEY=32
+    FUNC_KEY=33
+    FOR_KEY=34
+    UNTIL_KEY=35
+    BY_KEY=36
+    BREAK_KEY=37
+    CONTINUE_KEY=38
+    IF_KEY=39
+    ELSE_KEY=40
+    ELIF_KEY=41
+    BEGIN_KEY=42
+    END_KEY=43
+    STRING=44
+    IDENTIFIERS=45
+    COMMENT=46
+    NUMBER=47
+    WS=48
+    UNCLOSE_STRING=49
+    ILLEGAL_ESCAPE=50
+    NEWLINE=51
+    ERROR_CHAR=52
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)

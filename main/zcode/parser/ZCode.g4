@@ -1,3 +1,4 @@
+// My ID: 2212481
 grammar ZCode;
 
 @lexer::header {
@@ -10,65 +11,7 @@ options {
 
 program: ;
 
-STRING: '"'(~["]|[']["])*'"' {self.text = self.text[1:-1]};
-
-NUM_TYPE: 'number';
-
-BOOL_TYPE: 'boolean';
-
-STRING_TYPE: 'string';
-
-EQUAL_OPERATOR: '==';
-
-CONCAT_OPERATOR: '...';
-
-GE_OPERATOR: '>=';
-
-G_OPERATOR: '>';
-
-LE_OPERATOR: '<=';
-
-L_OPERATOR: '<';
-
-NE_OPERATOR: '!=';
-
-ASSIGN1_OPERATOR: '<-';
-
-ASSIGN2_OPERATOR: '=';
-
-OR_OPERATOR: 'or';
-
-AND_OPERATOR: 'and';
-
-NOT_OPERATOR: 'not';
-
-MODULO_OPERATOR: '%';
-
-ADD_OPERATOR: '+';
-
-SUB_OPERATOR: '-';
-
-MUL_OPERATOR: '*';
-
-DIV_OPERATOR: '/';
-
-TRUE_BOOLEAN: 'true';
-
-FALSE_BOOLEAN: 'false';
-
-LB: '(';
-
-RB: ')';
-
-LSB: '[';
-
-RSB: ']';
-
-LPT: '{';
-
-RPT: '}';
-
-COMMA: ',';
+//KEY WORD
 
 RETURN_KEY: 'return';
 
@@ -98,27 +41,105 @@ BEGIN_KEY: 'begin';
 
 END_KEY: 'end';
 
-SINGLEQUOTE: '\'' {self.text = self.text.replace('\\','')};
+// TYPE
 
-BACKSLASH: '\\' {self.text = self.text[0]};
+NUM_TYPE: 'number';
 
-IDENTIFIERS: [A-Za-z_][0-9A-Za-z_]*;
+BOOL_TYPE: 'boolean';
 
-NUMBER: (INTPART DECPART EXPPART?|INTPART DECPART? EXPPART?);
-fragment INTPART: ([0]|[1-9][0-9]*);
-fragment DECPART: '.'[0-9]*;
-fragment EXPPART: ('e'|'E')('+'|'-')?[0-9]+;
+STRING_TYPE: 'string';
+
+//OPERATOR
+
+EQUAL_OPERATOR: '==';
+
+CONCAT_OPERATOR: '...';
+
+ASSIGN1_OPERATOR: '<-';
+
+GE_OPERATOR: '>=';
+
+G_OPERATOR: '>';
+
+LE_OPERATOR: '<=';
+
+L_OPERATOR: '<';
+
+NE_OPERATOR: '!=';
+
+ASSIGN2_OPERATOR: '=';
+
+OR_OPERATOR: 'or';
+
+AND_OPERATOR: 'and';
+
+NOT_OPERATOR: 'not';
+
+MODULO_OPERATOR: '%';
+
+ADD_OPERATOR: '+';
+
+SUB_OPERATOR: '-';
+
+MUL_OPERATOR: '*';
+
+DIV_OPERATOR: '/';
+
+//BOOLEAN
+
+TRUE_BOOLEAN: 'true';
+
+FALSE_BOOLEAN: 'false';
+
+//SEPARATOR
+
+LB: '(';
+
+RB: ')';
+
+LSB: '[';
+
+RSB: ']';
+
+LPT: '{';
+
+RPT: '}';
+
+COMMA: ',';
+
+//COMMENT
 
 COMMENT: '##' ~[\r\n]* ->skip;
 
-WS : [ \t\r\n\b\f]+ -> skip ; // skip spaces, tabs, newlines
+//IDENTIFIER
 
-UNCLOSE_STRING: FORMAL INFORMAL* {raise UncloseString(self.text[1:-1])};
+IDENTIFIERS: [A-Za-z_][0-9A-Za-z_]*;
 
-fragment FORMAL: '"';
+//LITERAL
 
-fragment INFORMAL: ~["];
+STRING: ["] CHAR_OF_STRING* ["] {self.text = self.text[1:-1].replace('\'"','"')};
 
-ILLEGAL_ESCAPE: [\] ~[tnrbf] {raise IllegalEscape(self.text)};
+NUMBER: (INTPART DECPART EXPPART?|INTPART DECPART? EXPPART?);
+fragment INTPART: [0-9]+;
+fragment DECPART: '.'[0-9]*;
+fragment EXPPART: ('e'|'E')('+'|'-')?[0-9]+;
+
+//NEWLINE & WS
+
+NEWLINE: '\n'+ -> skip;
+
+WS: [ \t\r\f]+ -> skip; // skip spaces, tabs, newlines
+
+//ERROR
+
+UNCLOSE_STRING: '"' CHAR_OF_STRING*  {raise UncloseString(self.text[1:])};
+
+fragment CHAR_OF_STRING: ~["\t\b\f\r\n\\] | ESCAPE |[']["];
+
+fragment ESCAPE: '\\' [bftnr\\];
+
+ILLEGAL_ESCAPE: '"' CHAR_OF_STRING* ILL_ESCAPE  {raise IllegalEscape(self.text[1:])};
+
+fragment ILL_ESCAPE: '\\' ~[btfrn\] | '\\';
 
 ERROR_CHAR: . {raise ErrorToken(self.text)};
