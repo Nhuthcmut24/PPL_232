@@ -13,8 +13,8 @@ class LexerSuite(unittest.TestCase):
 
     def test_complex_string2(self):
         """test complex string"""
-        input = ''' "tabcd \t efg" '''
-        expectedOutput = "tabcd}\ efg,<EOF>"
+        input = ''' "tabcdefg\\" '''
+        expectedOutput = '''Illegal Escape In String: tabcdefg\\"'''
         self.assertTrue(TestLexer.test(input,expectedOutput,103))
 
     def test_complex_string3(self):
@@ -173,10 +173,16 @@ class LexerSuite(unittest.TestCase):
 
     def test_unclose_multi_line(self):
         """test unclose multi line"""
-        self.assertTrue(TestLexer.test("\"Hello Be Ba\\nHello CSE","Unclosed String: Hello Be Ba\\nHello CSE" ,803)) 
+        input='''
+        "Hello Be Ba\\Hello CSE"
+        '''
+        output= '''Illegal Escape In String: Hello Be Ba\\H'''
+        self.assertTrue(TestLexer.test(input,output ,803)) 
 
     def test_escape(self):
         """test escape"""
+        input=''' ""\\"cse"'''
+        output = "\\,cse,<EOF>"
         self.assertTrue(TestLexer.test("\"\\\"cse","\\,cse,<EOF>" ,804))
         
     def test_unclose_string2(self):
@@ -326,14 +332,14 @@ class LexerSuite(unittest.TestCase):
 
     def test_mix2(self):
         """test mix"""
-        input=''' "abc\n" '''
-        expectedOut='''Unclosed String: abc'''
+        input='''"\\a"'''
+        expectedOut='''Illegal Escape In String: \\a'''
         self.assertTrue(TestLexer.test(input,expectedOut,1402))
 
     def test_mix3(self):
         """test mix"""
-        input=''' "abc\tz" '''
-        expectedOut='''abcz,<EOF>'''
+        input=''' "abcz \\" '''
+        expectedOut='''Illegal Escape In String: abcz \\"'''
         self.assertTrue(TestLexer.test(input,expectedOut,1403))
 
     def test_mix_string(self):
@@ -412,3 +418,90 @@ class LexerSuite(unittest.TestCase):
         '''
         expectedOut='''begin,number,x,<-,readNumber,(,),if,(,isPrime,(,x,),),printString,(,Yes,),else,printString,(,No,),end,<EOF>'''
         self.assertTrue(TestLexer.test(input,expectedOut,1603))
+
+    def test_program5(self):
+        """test program"""
+        input='''
+        a[3 + foo(2)] <- a[b[2, 3]] + 4
+        '''
+        expectedOut='''a,[,3,+,foo,(,2,),],<-,a,[,b,[,2,,,3,],],+,4,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1604))
+        
+    def test_complex_lit(self):
+        """test complex literal"""
+        input='''
+        12.
+        '''
+        expectedOut='''12.,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1605))
+
+    def test_complex_mix(self):
+        """test complex mix"""
+        input='''
+        ##nhddjnadh\na<-5
+        '''
+        expectedOut='''a,<-,5,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1606))
+
+    def test_complex_mix2(self):
+        """test complex mix"""
+        input='''
+        a<5+6=7<=8
+        '''
+        expectedOut='''a,<,5,+,6,=,7,<=,8,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1607))
+        
+    def test_complex_mix3(self):
+        """test complex mix"""
+        input='''
+        12.56E+03
+        '''
+        expectedOut='''12.56E+03,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1608))
+
+    def test_complex_mix4(self):
+        """test complex mix"""
+        input='''
+        1E+0333
+        '''
+        expectedOut='''1E+0333,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1609))
+
+    def test_complex_mix5(self):
+        """test complex mix"""
+        input='''
+        .33
+        '''
+        expectedOut='''Error Token .'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1610))
+
+    def test_complex_lit2(self):
+        """test complex literal"""
+        input='''
+        "He said:'"How old are you?'""
+        '''
+        expectedOut='''He said:"How old are you?",<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1700))
+
+    def test_complex_lit3(self):
+        """test complex literal"""
+        input='''
+        l[3] <- value * aPi\\n
+        '''
+        expectedOut='''l,[,3,],<-,value,*,aPi,Error Token \\'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1701))
+
+    def test_complex_lit4(self):
+        """test complex literal"""
+        input='''
+        l[3] <- value * aPi\n
+        '''
+        expectedOut='''l,[,3,],<-,value,*,aPi,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1702))
+        
+    def test_complex_lit5(self):
+        """test complex literal"""
+        input='''s="String literal'''
+        expectedOut='''s,=,Unclosed String: String literal'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1703))
+        

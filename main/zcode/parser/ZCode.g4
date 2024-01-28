@@ -6,10 +6,10 @@ from lexererr import *
 }
 
 options {
-	language=Python3;
+	language = Python3;
 }
 
-program: ;
+program: EOF;
 
 //KEY WORD
 
@@ -109,7 +109,7 @@ COMMA: ',';
 
 //COMMENT
 
-COMMENT: '##' ~[\r\n]* ->skip;
+COMMENT: '##' ~[\r\n]* -> skip;
 
 //IDENTIFIER
 
@@ -117,29 +117,28 @@ IDENTIFIERS: [A-Za-z_][0-9A-Za-z_]*;
 
 //LITERAL
 
-STRING: ["] CHAR_OF_STRING* ["] {self.text = self.text[1:-1].replace('\'"','"')};
-
-NUMBER: (INTPART DECPART EXPPART?|INTPART DECPART? EXPPART?);
+NUMBER: (INTPART DECPART EXPPART? | INTPART DECPART? EXPPART?);
 fragment INTPART: [0-9]+;
-fragment DECPART: '.'[0-9]*;
-fragment EXPPART: ('e'|'E')('+'|'-')?[0-9]+;
+fragment DECPART: '.' [0-9]*;
+fragment EXPPART: ('e' | 'E') ('+' | '-')? [0-9]+;
 
-//NEWLINE & WS
-
-NEWLINE: '\n'+ -> skip;
-
-WS: [ \t\r\f]+ -> skip; // skip spaces, tabs, newlines
+STRINGLIT:
+	'"' (~["\n\\]|LI_ESCAPE|[']["])* '"' {self.text = self.text[1:-1].replace('\'"','"')};
 
 //ERROR
 
-UNCLOSE_STRING: '"' CHAR_OF_STRING*  {raise UncloseString(self.text[1:])};
+UNCLOSE_STRING: '"' (~["\n\\]|LI_ESCAPE|[']["])*   {raise UncloseString(self.text[1:])};
 
-fragment CHAR_OF_STRING: ~["\t\b\f\r\n\\] | ESCAPE |[']["];
+fragment LI_ESCAPE: ('\\' ['bftr\\]) ;
 
-fragment ESCAPE: '\\' [bftnr\\];
+ILLEGAL_ESCAPE:
+	'"' (~["\n\\]|LI_ESCAPE|[']["])*  ILL_ESCAPE {raise IllegalEscape(self.text[1:])};
 
-ILLEGAL_ESCAPE: '"' CHAR_OF_STRING* ILL_ESCAPE  {raise IllegalEscape(self.text[1:])};
+fragment ILL_ESCAPE: '\\' ~['btfr\\];
 
-fragment ILL_ESCAPE: '\\' ~[btfrn\] | '\\';
+//NEWLINE & WS
+WS: [ \t\r\f]+ -> skip; // skip spaces, tabs, newlines
+
+NEW_LINE: '\n'+ -> skip;
 
 ERROR_CHAR: . {raise ErrorToken(self.text)};
