@@ -504,4 +504,35 @@ class LexerSuite(unittest.TestCase):
         input='''s="String literal'''
         expectedOut='''s,=,Unclosed String: String literal'''
         self.assertTrue(TestLexer.test(input,expectedOut,1703))
+
+    def test_complex_lit6(self):
+        """test complex literal"""
+        input='''"abc\n'''
+        expectedOut='''Unclosed String: abc
+'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1704))
+
+    def test_complex_lit7(self):
+        """test complex literal"""
+        input='''"Hello \\\\ \\"'''
+        expectedOut='''Illegal Escape In String: Hello \\\\ \\"'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1705))
+
+    def test_complex_escape(self):
+        """test complex escape"""
+        input='''"Hello \\\\ \\t"'''
+        expectedOut='''Hello \\\\ \\t,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1800))
         
+    def test_complex_escape2(self):
+        """test complex escape"""
+        input='''"Hello \\\\ \\t \\w"'''
+        expectedOut='''Illegal Escape In String: Hello \\\\ \\t \\w'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1801))
+
+    def test_complex_escape3(self):
+        """test complex escape"""
+        input='''"Hello \\\\ \\t \\'"'''
+        expectedOut='''Hello \\\\ \\t \\',<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1802))
+
