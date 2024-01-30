@@ -58,6 +58,22 @@ class ParserSuite(unittest.TestCase):
         """
         expect = "successful"
         self.assertTrue(TestParser.test(input,expect,1907))
+    
+    def test_simple_program9(self):
+        """Simple program"""
+        input = """func isPrime(number x)
+        begin
+        if (x <= 1) return false
+        var i <- 2
+        for i until i > x / 2 by 1
+        begin
+        if (x % i = 0) return false
+        end
+        return true
+        end
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,1908))
 
     def test_simple_assign_statement(self):
         """Simple program"""
@@ -83,7 +99,7 @@ class ParserSuite(unittest.TestCase):
         """Simple program"""
         input = """func foo()
         begin
-        if x 
+        if (x) 
         
         begin
         
@@ -100,7 +116,7 @@ class ParserSuite(unittest.TestCase):
         """Simple program"""
         input = """func foo()
         begin
-        if x+y y<-"string literal\t" + foo(2)
+        if (x+y) y<-"string literal\t" + foo(2)
         elif a b<-5
         else number x
         end
@@ -118,7 +134,72 @@ class ParserSuite(unittest.TestCase):
         expect = "successful"
         self.assertTrue(TestParser.test(input,expect,2102))
     
+    def test_simple_for_statement2(self):
+        """Simple program"""
+        input = """var i <- 0
+        func foo()
+        begin
+        for i until i >= 10 by 1
+        return
+        end
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,2103))
+    
+    def test_simple_break_statement(self):
+        """Simple program"""
+        input = """var i <- 0
+        func foo() begin
+        break
+        end
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,2104))
+    
+    def test_simple_continue_statement(self):
+        """Simple program"""
+        input = """var i <- 0
+        func foo() begin
+        continue
+        return
+        end
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,2105))
+    
+    def test_simple_return_statement(self):
+        """Simple program"""
+        input = """var i <- 0
+        func foo(number x) begin
+        for i until i >= 10 by 1
+        break
+        continue
+        return
+        end
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,2106))
+        
+    def test_function_call_statement(self):
+        """Simple program"""
+        input = """var i <- 0
+        func foo() begin
+        for i until i >= 10 by 1
+        foo(i)
+        end
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,2107))
 
+    def test_block_statement(self):
+        """Simple program"""
+        input = """func foo()
+        begin
+        x <- "abx" + 5
+        end
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,2108))
 
 
     

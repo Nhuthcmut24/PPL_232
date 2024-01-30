@@ -34,6 +34,131 @@ class ZCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by ZCodeParser#varkeydecl.
+    def visitVarkeydecl(self, ctx:ZCodeParser.VarkeydeclContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#dynamicdecl.
+    def visitDynamicdecl(self, ctx:ZCodeParser.DynamicdeclContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#funcdecl.
+    def visitFuncdecl(self, ctx:ZCodeParser.FuncdeclContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#arraydecl.
+    def visitArraydecl(self, ctx:ZCodeParser.ArraydeclContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#arrayvalue.
+    def visitArrayvalue(self, ctx:ZCodeParser.ArrayvalueContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#arrayval.
+    def visitArrayval(self, ctx:ZCodeParser.ArrayvalContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#arrayvallist.
+    def visitArrayvallist(self, ctx:ZCodeParser.ArrayvallistContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#listarrayval.
+    def visitListarrayval(self, ctx:ZCodeParser.ListarrayvalContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#sizelist.
+    def visitSizelist(self, ctx:ZCodeParser.SizelistContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#statement.
+    def visitStatement(self, ctx:ZCodeParser.StatementContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#stmtlist.
+    def visitStmtlist(self, ctx:ZCodeParser.StmtlistContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#blockstmt.
+    def visitBlockstmt(self, ctx:ZCodeParser.BlockstmtContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#funccallstmt.
+    def visitFunccallstmt(self, ctx:ZCodeParser.FunccallstmtContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#returnstmt.
+    def visitReturnstmt(self, ctx:ZCodeParser.ReturnstmtContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#continuestmt.
+    def visitContinuestmt(self, ctx:ZCodeParser.ContinuestmtContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#forstmt.
+    def visitForstmt(self, ctx:ZCodeParser.ForstmtContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#breakstmt.
+    def visitBreakstmt(self, ctx:ZCodeParser.BreakstmtContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#ifstmt.
+    def visitIfstmt(self, ctx:ZCodeParser.IfstmtContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#eliflist.
+    def visitEliflist(self, ctx:ZCodeParser.EliflistContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#elifcomponent.
+    def visitElifcomponent(self, ctx:ZCodeParser.ElifcomponentContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#assignstmt.
+    def visitAssignstmt(self, ctx:ZCodeParser.AssignstmtContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#relationaloperator.
+    def visitRelationaloperator(self, ctx:ZCodeParser.RelationaloperatorContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#logicoperator.
+    def visitLogicoperator(self, ctx:ZCodeParser.LogicoperatorContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#arithmeticoperator.
+    def visitArithmeticoperator(self, ctx:ZCodeParser.ArithmeticoperatorContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by ZCodeParser#typ.
+    def visitTyp(self, ctx:ZCodeParser.TypContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by ZCodeParser#expr.
     def visitExpr(self, ctx:ZCodeParser.ExprContext):
         return self.visitChildren(ctx)
@@ -89,86 +214,6 @@ class ZCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ZCodeParser#relationaloperator.
-    def visitRelationaloperator(self, ctx:ZCodeParser.RelationaloperatorContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#logicoperator.
-    def visitLogicoperator(self, ctx:ZCodeParser.LogicoperatorContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#arithmeticoperator.
-    def visitArithmeticoperator(self, ctx:ZCodeParser.ArithmeticoperatorContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#varkeydecl.
-    def visitVarkeydecl(self, ctx:ZCodeParser.VarkeydeclContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#dynamicdecl.
-    def visitDynamicdecl(self, ctx:ZCodeParser.DynamicdeclContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#typ.
-    def visitTyp(self, ctx:ZCodeParser.TypContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#arraydecl.
-    def visitArraydecl(self, ctx:ZCodeParser.ArraydeclContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#arrayvalue.
-    def visitArrayvalue(self, ctx:ZCodeParser.ArrayvalueContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#arrayval.
-    def visitArrayval(self, ctx:ZCodeParser.ArrayvalContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#arrayvallist.
-    def visitArrayvallist(self, ctx:ZCodeParser.ArrayvallistContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#listarrayval.
-    def visitListarrayval(self, ctx:ZCodeParser.ListarrayvalContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#sizelist.
-    def visitSizelist(self, ctx:ZCodeParser.SizelistContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#statement.
-    def visitStatement(self, ctx:ZCodeParser.StatementContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#blockstmt.
-    def visitBlockstmt(self, ctx:ZCodeParser.BlockstmtContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#stmtlist.
-    def visitStmtlist(self, ctx:ZCodeParser.StmtlistContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#funccallstmt.
-    def visitFunccallstmt(self, ctx:ZCodeParser.FunccallstmtContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by ZCodeParser#argumentlist.
     def visitArgumentlist(self, ctx:ZCodeParser.ArgumentlistContext):
         return self.visitChildren(ctx)
@@ -189,48 +234,13 @@ class ZCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ZCodeParser#returnstmt.
-    def visitReturnstmt(self, ctx:ZCodeParser.ReturnstmtContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#continuestmt.
-    def visitContinuestmt(self, ctx:ZCodeParser.ContinuestmtContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#forstmt.
-    def visitForstmt(self, ctx:ZCodeParser.ForstmtContext):
+    # Visit a parse tree produced by ZCodeParser#booleanvalue.
+    def visitBooleanvalue(self, ctx:ZCodeParser.BooleanvalueContext):
         return self.visitChildren(ctx)
 
 
     # Visit a parse tree produced by ZCodeParser#numbervariable.
     def visitNumbervariable(self, ctx:ZCodeParser.NumbervariableContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#breakstmt.
-    def visitBreakstmt(self, ctx:ZCodeParser.BreakstmtContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#ifstmt.
-    def visitIfstmt(self, ctx:ZCodeParser.IfstmtContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#eliflist.
-    def visitEliflist(self, ctx:ZCodeParser.EliflistContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#elifcomponent.
-    def visitElifcomponent(self, ctx:ZCodeParser.ElifcomponentContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#assignstmt.
-    def visitAssignstmt(self, ctx:ZCodeParser.AssignstmtContext):
         return self.visitChildren(ctx)
 
 
@@ -251,11 +261,6 @@ class ZCodeVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by ZCodeParser#indexexpr.
     def visitIndexexpr(self, ctx:ZCodeParser.IndexexprContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#funcdecl.
-    def visitFuncdecl(self, ctx:ZCodeParser.FuncdeclContext):
         return self.visitChildren(ctx)
 
 

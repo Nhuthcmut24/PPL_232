@@ -1,6 +1,6 @@
 func foo()
         begin
-        if x 
+        if (x) 
         
         begin
         
