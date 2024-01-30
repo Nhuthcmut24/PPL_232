@@ -249,8 +249,8 @@ class ZCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by ZCodeParser#indexelement.
-    def visitIndexelement(self, ctx:ZCodeParser.IndexelementContext):
+    # Visit a parse tree produced by ZCodeParser#indexexpr.
+    def visitIndexexpr(self, ctx:ZCodeParser.IndexexprContext):
         return self.visitChildren(ctx)
 
 

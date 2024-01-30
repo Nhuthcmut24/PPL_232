@@ -9,17 +9,25 @@ options {
 	language = Python3;
 }
 
-program: decllist;
+program: decllist; // Chuong trinh bao gom nhieu khai bao
 
-decllist: decl decllist | decl;
+decllist:
+	decl decllist
+	| decl; // Bieu dien danh sach khai bao khong rong
 
-decl: vardecl | funcdecl;
+decl:
+	vardecl
+	| funcdecl; // Khai bao co the la khai bao ham hoac khai bao bien
 
-vardecl: typdecl | varkeydecl | dynamicdecl;
+vardecl:
+	typdecl
+	| varkeydecl
+	| dynamicdecl; // Co 3 cach khai bao bien
 
-typdecl: typ ID (ASSIGN1_OPERATOR expr)? NEW_LINE;
+typdecl:
+	typ ID (ASSIGN1_OPERATOR expr)? newlinelistnonull | arraydecl; //Khai bao bien kieu nguyen thuy
 
-expr: expr1 CONCAT_OPERATOR expr1 | expr1;
+expr: expr1 CONCAT_OPERATOR expr1 | expr1; //Khai trien bieu thuc
 
 expr1: expr2 relationaloperator expr2 | expr2;
 
@@ -41,7 +49,7 @@ indexoperator: (ID | funccallstmt) LSB indexope RSB;
 
 indexope: expr | expr COMMA indexope;
 
-expr8: ID | funccallstmt;
+expr8: ID | funccallstmt | literal | arrayvalue; // Co the phai sua
 
 relationaloperator:
 	EQUAL_OPERATOR
@@ -61,42 +69,59 @@ arithmeticoperator:
 	| DIV_OPERATOR
 	| MUL_OPERATOR;
 
-varkeydecl: VAR_KEY ASSIGN1_OPERATOR expr NEW_LINE;
+varkeydecl:
+	VAR_KEY ID ASSIGN1_OPERATOR expr newlinelistnonull; //Khai bao bien voi tu khoa var
 
-dynamicdecl: DYNAMIC_KEY ID (ASSIGN1_OPERATOR expr)? NEW_LINE;
+dynamicdecl:
+	DYNAMIC_KEY ID (ASSIGN1_OPERATOR expr)? newlinelistnonull; //Khai bao bien voi tu khoa dynamic
 
-typ: NUM_TYPE | BOOL_TYPE | STRING_TYPE;
+typ:
+	NUM_TYPE
+	| BOOL_TYPE
+	| STRING_TYPE; //Kieu du lieu (gom 3 kieu du lieu nguyen thuy)
 
-arraydecl: typ ID LSB sizelist RSB NEW_LINE;
+arraydecl:
+	typ ID LSB sizelist RSB (ASSIGN1_OPERATOR arrayvalue)? newlinelistnonull; //Khai bao array
 
-arrayvalue: arrayval | arrayvallist;
+arrayvalue:
+	arrayval
+	| arrayvallist; //Gia tri cua mang (co the 1 chieu hoac da chieu)
 
-arrayval: LSB sizelist RSB;
+arrayval: LSB sizelist RSB; //Gia tri array 1 chieu
 
-arrayvallist: LSB listarrayval RSB;
+arrayvallist:
+	LSB listarrayval RSB; //List cac gia tri array 1 chieu
 
-listarrayval: arrayval COMMA listarrayval | arrayval;
+listarrayval:
+	arrayval COMMA listarrayval
+	| arrayval; //Gia tri cuoi cung cua array da chieu
 
-sizelist: INTLIT COMMA sizelist | INTLIT;
+sizelist:
+	NUMBER COMMA sizelist
+	| NUMBER; //Danh sach kich thuoc cua khai bao mang
 
-statement:
-	vardecl
-	| assignstmt
-	| ifstmt
-	| forstmt
-	| breakstmt
-	| continuestmt
-	| returnstmt
-	| funccallstmt
-	| blockstmt;
+statement: // Cau lenh (gom nhieu loai cau lenh)
+	vardecl //Lenh Khai bao bien
+	| assignstmt //Lenh gan
+	| ifstmt //Lenh if
+	| forstmt //Lenh for
+	| breakstmt //Lenh break
+	| continuestmt //Lenh continue
+	| returnstmt //Lenh return
+	| funccallstmt //Lenh goi ham
+	| blockstmt; //Lenh block
 
-blockstmt: BEGIN_KEY NEW_LINE stmtlist END_KEY NEW_LINE;
+blockstmt:
+	BEGIN_KEY newlinelistnonull stmtlist END_KEY newlinelistnonull; // Lenh block
 
-stmtlist: statement stmtlist |;
+stmtlist:
+	statement stmtlist
+	|; //Danh sach cac cau lenh trong block (co the rong)
 
-funccallstmt: ID LB argumentlist RB NEW_LINE;
+funccallstmt:
+	ID LB argumentlist RB newlinelist; //Lenh goi ham
 
-argumentlist: argumentprime |;
+argumentlist: argumentprime |; //Danh sach doi so (co the rong)
 
 argumentprime: argument COMMA argumentprime | argument;
 
@@ -104,45 +129,55 @@ argument: literal;
 
 literal: INTLIT | STRINGLIT | NUMBER | ID;
 
-returnstmt: RETURN_KEY NEW_LINE | RETURN_KEY expr NEW_LINE;
+returnstmt: RETURN_KEY expr? newlinelistnonull; //Lenh Return , can xem xet doan \n
 
-continuestmt: CONTINUE_KEY NEW_LINE;
+continuestmt: CONTINUE_KEY newlinelistnonull;
 
 forstmt:
-	FOR_KEY numbervariable UNTIL_KEY expr BY_KEY expr statement NEW_LINE;
+	FOR_KEY numbervariable UNTIL_KEY expr BY_KEY expr newlinelist statement; //Lenh for
 
 numbervariable: ID;
 
-breakstmt: BREAK_KEY NEW_LINE;
+breakstmt: BREAK_KEY newlinelistnonull;
 
-ifstmt:
+ifstmt: //Lenh if
 	IF_KEY expr newlinelist statement eliflist (
 		ELSE_KEY statement
-	)? NEW_LINE;
+	)?;
 
-eliflist: elifcomponent eliflist |;
+eliflist:
+	elifcomponent eliflist
+	| ; //Danh sach lenh elif co the rong
 
-elifcomponent: ELIF_KEY expr newlinelist statement NEW_LINE;
+elifcomponent:
+	ELIF_KEY expr newlinelist statement;
 
-assignstmt: lhs ASSIGN1_OPERATOR expr;
+assignstmt:
+	lhs ASSIGN1_OPERATOR expr newlinelistnonull; //Lenh gan
 
 newlinelist: NEW_LINE newlinelist |;
 
 newlinelistnonull: NEW_LINE newlinelist | NEW_LINE;
 
-lhs: ID | indexelement;
+lhs: ID | indexexpr; // 
 
-indexelement: ID LSB sizelist RSB;
+indexexpr: ID LSB sizelist RSB | ID LSB indexexpr RSB;
 
-funcdecl: FUNC_KEY ID paralist;
+funcdecl:
+	FUNC_KEY ID paralist newlinelist (returnstmt | blockstmt) | FUNC_KEY ID paralist newlinelistnonull ; // Khai bao ham (cho phep tien khai bao)
 
-paralist: LB parameterlist RB;
+paralist:
+	LB parameterlist RB; //Danh sach tham so cua ham (co the rong) co ngoac
 
-parameterlist: paraprime |;
+parameterlist:
+	paraprime
+	|; //Danh sach tham so cua ham (co the rong) khong ngoac
 
-paraprime: para COMMA paraprime | para;
+paraprime:
+	para COMMA paraprime
+	| para; //Danh sach tham so khong rong
 
-para: typ ID;
+para: typ ID | typ ID LSB RSB; //tham so (nguyen thuy hoac array)
 
 //KEY WORD
 
@@ -276,6 +311,6 @@ fragment ILL_ESCAPE: '\\' ~['btfr\\];
 
 WS: [ \t\r\f]+ -> skip; // skip spaces, tabs, newlines
 
-NEW_LINE: '\n'+ -> skip;
+NEW_LINE: '\n'+;
 
 ERROR_CHAR: . {raise ErrorToken(self.text)};
