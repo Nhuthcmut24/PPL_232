@@ -200,6 +200,74 @@ class ParserSuite(unittest.TestCase):
         """
         expect = "successful"
         self.assertTrue(TestParser.test(input,expect,2108))
+        
+    def test_complex_program(self):
+        """Complex program"""
+        input = """func foo()
+        begin
+        x <- arr[1] + 5.03e-4
+        end
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,2200))
+
+    def test_complex_program2(self):
+        """Complex program"""
+        input = """func foo()
+        begin
+        x[2+foo(3,4)] <- arr[b[12]] + 5.04e-12
+        end
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,2201))
+
+    def test_complex_program3(self):
+        """Complex program"""
+        input = """func foo()
+        begin
+        x[2+foo(3,4)] <- arr[b[12]] + 5.04e-12
+        y[2+foo(3,4),5] <- 5.04e-12
+        end
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,2202))
+
+    def test_complex_program4(self):
+        """Complex program"""
+        input = """func foo()
+        begin
+        x[2+foo(3,4)] <- arr[b[12]] + 5.04e-12
+        y[2+foo(3,4),5] <- 5.04e-12
+        end
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,2203))
+
+    def test_complex_program5(self):
+        """Complex program"""
+        input = """func foo()
+        begin
+        x[2+foo(3,4)] <- arr[b[12]] + 5.04e-12
+        y[2+foo(3,4),5] <- 5.04e-12
+        z <- "string literal\t"
+        end
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,2204))
+
+    def test_complex_program5(self):
+        """Complex program"""
+        input = """func foo()
+        begin
+        x[2+foo(3,4)] <- arr[b[12]] + 5.04e-12
+        y[2+foo(3,4),5] <- 5.04e-12
+        z <- "string literal\t"
+        end
+        """
+        expect = "successful"
+        self.assertTrue(TestParser.test(input,expect,2204))
+
+
 
 
     

@@ -1,1 +1,7 @@
-begin,number,x,<-,readNumber,(,),if,(,isPrime,(,x,),),printString,(,Yes,),else,printString,(,No,),end,<EOF>
+
+,begin,
+,number,x,<-,readNumber,(,),
+,if,(,isPrime,(,x,),),printString,(,Yes,),
+,else,printString,(,No,),
+,end,
+,<EOF>

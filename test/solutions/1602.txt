@@ -1,1 +1,5 @@
-func,isPrime,(,number,x,),func,main,(,),begin,<EOF>
+func,isPrime,(,number,x,),
+,
+,func,main,(,),
+,begin,
+,<EOF>

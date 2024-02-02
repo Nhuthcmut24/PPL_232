@@ -199,6 +199,11 @@ class ZCodeVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by ZCodeParser#expr8.
+    def visitExpr8(self, ctx:ZCodeParser.Expr8Context):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by ZCodeParser#indexoperator.
     def visitIndexoperator(self, ctx:ZCodeParser.IndexoperatorContext):
         return self.visitChildren(ctx)
@@ -206,11 +211,6 @@ class ZCodeVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by ZCodeParser#indexope.
     def visitIndexope(self, ctx:ZCodeParser.IndexopeContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by ZCodeParser#expr8.
-    def visitExpr8(self, ctx:ZCodeParser.Expr8Context):
         return self.visitChildren(ctx)
 
 

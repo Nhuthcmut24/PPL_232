@@ -1,3 +1,1 @@
-
-        "Hello Be Ba\Hello CSE"
-        
+"Hello Be Ba\Hello CSE"

@@ -1,5 +1,4 @@
-
-        func isPrime(number x)
+func isPrime(number x)
         
         func main()
         begin 

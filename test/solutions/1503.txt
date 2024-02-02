@@ -1,1 +1,3 @@
-a,+,+,string,a,=,a,Error Token ;
+
+,a,+,+,
+,string,a,=,a,Error Token ;

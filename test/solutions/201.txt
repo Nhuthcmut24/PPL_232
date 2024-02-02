@@ -1,1 +1,1 @@
-successful
+func,main,(,),return,1,<EOF>

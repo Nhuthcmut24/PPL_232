@@ -95,7 +95,7 @@ forstmt:
 breakstmt: BREAK_KEY newlinelistnonull;
 
 ifstmt: //Lenh if
-	IF_KEY  LB expr RB newlinelist statement eliflist (
+	IF_KEY LB expr RB newlinelist statement eliflist (
 		ELSE_KEY statement
 	)?;
 
@@ -153,17 +153,18 @@ expr5: expr6 NOT_OPERATOR expr5 | expr6;
 
 expr6: SUB_OPERATOR expr6 | expr7;
 
-expr7: expr7 indexoperator expr8 | expr8;
-
-indexoperator: (ID | funccallstmt) LSB indexope RSB;
-
-indexope: expr | expr COMMA indexope;
+expr7: expr7 indexoperator | expr8;
 
 expr8:
 	ID
 	| funccallstmt
 	| literal
-	| arrayvalue; // Co the phai sua
+	| arrayvalue // Co the phai sua
+	| indexoperator;
+
+indexoperator: (ID | funccallstmt) LSB indexope RSB;
+
+indexope: expr | expr COMMA indexope;
 
 argumentlist: argumentprime |; //Danh sach doi so (co the rong)
 
@@ -181,7 +182,7 @@ newlinelist: NEW_LINE newlinelist |;
 
 newlinelistnonull: NEW_LINE newlinelistnonull | NEW_LINE;
 
-lhs: ID | indexexpr; // 
+lhs: ID | indexexpr | indexoperator; // 
 
 indexexpr: ID LSB sizelist RSB | ID LSB indexexpr RSB;
 
@@ -326,7 +327,7 @@ fragment ILL_ESCAPE: '\\' ~['btfr\\];
 
 //NEWLINE & WS
 
-NEW_LINE: '\n'+;
+NEW_LINE: '\n';
 
 WS: [ \t\r\f]+ -> skip; // skip spaces, tabs, newlines
 
