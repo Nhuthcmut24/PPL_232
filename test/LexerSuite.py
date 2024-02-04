@@ -35,11 +35,11 @@ class LexerSuite(unittest.TestCase):
 
     def test_simplex_func(self):
         """test simplex func"""
-        self.assertTrue(TestLexer.test("int main () {putIntLn(4);}","int,main,(,),{,putIntLn,(,4,),Error Token ;",202))
+        self.assertTrue(TestLexer.test("int main () {putIntLn(4);}","int,main,(,),Error Token {",202))
 
     def test_simplex_func2(self):
         """test simplex func2"""
-        self.assertTrue(TestLexer.test("int main( {}","int,main,(,{,},<EOF>",203))
+        self.assertTrue(TestLexer.test("int main( {}","int,main,(,Error Token {",203))
         
     def test_comment(self):
         """test comment"""
@@ -248,7 +248,7 @@ class LexerSuite(unittest.TestCase):
         self.assertTrue(TestLexer.test("for (int a ; b = 2 && c = 2; 2**2)","for,(,int,a,Error Token ;" ,1101))
     def test_random3(self):
         """test random """
-        self.assertTrue(TestLexer.test("str abc[] = {1,2,3}","str,abc,[,],=,{,1,,,2,,,3,},<EOF>" ,1102))
+        self.assertTrue(TestLexer.test("str abc[] = {1,2,3}","str,abc,[,],=,Error Token {" ,1102))
     def test_random4(self):
         """test random """
         self.assertTrue(TestLexer.test("$no idea","Error Token $" ,1103))
@@ -271,11 +271,11 @@ class LexerSuite(unittest.TestCase):
 
     def test_random9(self):
         """test random """
-        self.assertTrue(TestLexer.test("void print(string str){io.writeString(str)","void,print,(,string,str,),{,io,Error Token .",1108))
+        self.assertTrue(TestLexer.test("void print(string str){io.writeString(str)","void,print,(,string,str,),Error Token {",1108))
     
     def test_simple_array(self):
         """test simple array """
-        self.assertTrue(TestLexer.test("number arr[5] = {1,2}","number,arr,[,5,],=,{,1,,,2,},<EOF>",1200))
+        self.assertTrue(TestLexer.test("number arr[5] = {1,2}","number,arr,[,5,],=,Error Token {",1200))
 
     def test_simplex(self):
         """test simplex"""
@@ -375,7 +375,7 @@ class LexerSuite(unittest.TestCase):
         input='''void print(string str){io.writeString(str);}
         void main(){this.print(\"\";}}  
         '''
-        expectedOut='''void,print,(,string,str,),{,io,Error Token .'''
+        expectedOut='''void,print,(,string,str,),Error Token {'''
         self.assertTrue(TestLexer.test(input,expectedOut,1600))
 
     def test_program2(self):
@@ -532,3 +532,154 @@ class LexerSuite(unittest.TestCase):
         input=""" "He asked me: \'"Where is John?\'"" """
         expectedOut='''He asked me: '"Where is John?'",<EOF>'''
         self.assertTrue(TestLexer.test(input,expectedOut,1806))
+
+    def test_complex_token(self):
+        """test complex token"""
+        input=""" +-*/%= <- != < <= > >= ... == """
+        expectedOut='''+,-,*,/,%,=,<-,!=,<,<=,>,>=,...,==,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1807))
+        
+    def test_complex_token2(self):
+        """test complex token"""
+        input=""" 1 0 -0.5 5e+4 0e-30 """
+        expectedOut='''1,0,-,0.5,5e+4,0e-30,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1808))
+
+    def test_complex_token3(self):
+        """test complex token"""
+        input=''' "Mr Hero say: '"Hello guys'"" '''
+        expectedOut='''Mr Hero say: '"Hello guys'",<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1809))
+
+    def test_complex_token4(self):
+        """test complex token"""
+        input=''' "Mr Hero say: '"Hello\' guys'"" '''
+        expectedOut='''Mr Hero say: '"Hello\' guys'",<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1810))
+
+    def test_complex_token5(self):
+        """test complex token"""
+        input=''' "Nguyen Quoc \\n \n" '''
+        expectedOut='''Unclosed String: Nguyen Quoc \\n \n'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1811))
+
+    def test_complex_token6(self):
+        """test complex token"""
+        input=''' "Nguyen Quoc \n" '''
+        expectedOut='''Unclosed String: Nguyen Quoc \n'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1812))
+
+    def test_complex_token7(self):
+        """test complex token"""
+        input=''' "Nguyen Quoc \\n \\c \\s" '''
+        expectedOut='''Illegal Escape In String: Nguyen Quoc \\n \\c'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1813))
+
+    def test_complex_token8(self):
+        """test complex token"""
+        input=''' "Vo ' \n \\b" '''
+        expectedOut='''Unclosed String: Vo \' \n'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1814))
+
+    def test_complex_token9(self):
+        """test complex token"""
+        input=''' "Tien \\2 \\n \n" '''
+        expectedOut='''Illegal Escape In String: Tien \\2'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1815))
+
+    def test_complex_token10(self):
+        """test complex token"""
+        input=''' ## Nguyen Quoc Nhut '''
+        expectedOut='''<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1816))
+
+    def test_complex_token11(self):
+        """test complex token"""
+        input=''' ###'''
+        expectedOut='''<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1817))
+
+    def test_complex_token12(self):
+        """test complex token"""
+        input=''' a##1 '''
+        expectedOut='''a,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1818))
+
+    def test_complex_token13(self):
+        """test complex token"""
+        input=''' a# '''
+        expectedOut='''a,Error Token #'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1819))
+
+    def test_complex_token14(self):
+        """test complex token"""
+        input=''' a\n##1\nb '''
+        expectedOut='''a,\n,\n,b,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1820))
+
+    def test_complex_token15(self):
+        """test complex token"""
+        input=''' a\n\n\n# '''
+        expectedOut='''a,\n,\n,\n,Error Token #'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1821))
+
+    def test_complex_token16(self):
+        """test complex token"""
+        input=''' . '''
+        expectedOut='''Error Token .'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1822))
+
+    def test_complex_token17(self):
+        """test complex token"""
+        input=''' ; '''
+        expectedOut='''Error Token ;'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1823))
+
+    def test_complex_token18(self):
+        """test complex token"""
+        input=''' {'''
+        expectedOut='''Error Token {'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1824))
+
+    def test_complex_token19(self):
+        """test complex token"""
+        input=''' +1-2'''
+        expectedOut='''+,1,-,2,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1825))
+
+    def test_complex_token20(self):
+        """test complex token"""
+        input=''' +1-2'''
+        expectedOut='''+,1,-,2,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1826))
+
+    def test_complex_token21(self):
+        """test complex token"""
+        input=''' "Tien \t \n" '''
+        expectedOut='''Unclosed String: Tien \t \n'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1827))
+
+    def test_complex_token22(self):
+        """test complex token"""
+        input=''' "Tien \\" '''
+        expectedOut='''Illegal Escape In String: Tien \\"'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1828))
+
+    def test_complex_token23(self):
+        """test complex token"""
+        input=''' "Tien \'" " '''
+        expectedOut='''Tien \'" ,<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1829))
+
+    def test_complex_token24(self):
+        """test complex token"""
+        input=''' "Tien \\\'" " '''
+        expectedOut='''Tien \\\',Unclosed String:  '''
+        self.assertTrue(TestLexer.test(input,expectedOut,1830))
+
+    def test_complex_token25(self):
+        """test complex token"""
+        input=''' "Tien '\\ '''
+        expectedOut='''Illegal Escape In String: Tien \'\\ '''
+        self.assertTrue(TestLexer.test(input,expectedOut,1831))
+    

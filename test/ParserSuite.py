@@ -1188,3 +1188,16 @@ class ParserSuite(unittest.TestCase):
         """
         expect = """successful"""
         self.assertTrue(TestParser.test(input,expect,2459))
+
+    def test_complex_component62(self):
+        """Complex component"""
+        input ="""
+        func main(number a[],string x) begin
+        arr[1] <- 2
+        dynamic z <- "nhut"..."hi"
+        end
+        string t <- "Nguyen Quoc Nhut \\'"
+        """
+        expect = """successful"""
+        self.assertTrue(TestParser.test(input,expect,2460))
+

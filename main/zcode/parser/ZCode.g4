@@ -209,6 +209,8 @@ para: typ ID | typ ID LSB RSB | arrayparameter; //tham so (nguyen thuy hoac arra
 
 //KEY WORD
 
+COMMENT: '##' ~[\r\n]* -> skip;
+
 RETURN_KEY: 'return';
 
 VAR_KEY: 'var';
@@ -297,15 +299,10 @@ LSB: '[';
 
 RSB: ']';
 
-LPT: '{';
-
-RPT: '}';
-
 COMMA: ',';
 
 //COMMENT
 
-COMMENT: '##' ~[\r\n]* -> skip;
 
 //IDENTIFIER
 
@@ -326,12 +323,12 @@ STRINGLIT:
 UNCLOSE_STRING:
 	'"' (~["\n\\] | LI_ESCAPE | [']["])* {raise UncloseString(self.text[1:])};
 
-fragment LI_ESCAPE: ('\\' ['bftr\\]);
+fragment LI_ESCAPE: ('\\' ['bftrn\\]);
 
 ILLEGAL_ESCAPE:
 	'"' (~["\n\\] | LI_ESCAPE | [']["])* ILL_ESCAPE {raise IllegalEscape(self.text[1:])};
 
-fragment ILL_ESCAPE: '\\' ~['btfr\\];
+fragment ILL_ESCAPE: '\\' ~['bntfr\\];
 
 //NEWLINE & WS
 

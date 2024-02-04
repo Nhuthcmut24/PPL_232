@@ -1,1 +1,1 @@
-int,main,(,),{,putIntLn,(,4,),Error Token ;
+int,main,(,),Error Token {

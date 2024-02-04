@@ -1,1 +1,1 @@
-int,main,(,{,},<EOF>
+int,main,(,Error Token {

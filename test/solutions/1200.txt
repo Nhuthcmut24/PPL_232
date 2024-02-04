@@ -1,1 +1,1 @@
-number,arr,[,5,],=,{,1,,,2,},<EOF>
+number,arr,[,5,],=,Error Token {

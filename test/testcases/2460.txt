@@ -1,0 +1,7 @@
+
+        func main(number a[],string x) begin
+        arr[1] <- 2
+        dynamic z <- "nhut"..."hi"
+        end
+        string t <- "Nguyen Quoc Nhut \'"
+        

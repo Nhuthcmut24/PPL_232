@@ -1,1 +1,1 @@
-void,print,(,string,str,),{,io,Error Token .
+void,print,(,string,str,),Error Token {
