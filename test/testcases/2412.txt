@@ -1,0 +1,8 @@
+
+            func main(string a) 
+                begin 
+                    break ## 12
+                end
+            func main(dynamic a) 
+        func main(number a) var c <- 1
+        

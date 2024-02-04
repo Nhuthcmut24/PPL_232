@@ -515,3 +515,15 @@ class LexerSuite(unittest.TestCase):
         expectedOut='''4,-,5,<EOF>'''
         self.assertTrue(TestLexer.test(input,expectedOut,1803))
 
+    def test_complex_literal_and_escape(self):
+        """test complex literal and escape"""
+        input='''"Nhut \\G"'''
+        expectedOut='''Illegal Escape In String: Nhut \\G'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1804))
+
+    def test_complex_literal_and_escape2(self):
+        """test complex literal and escape"""
+        input='''"Nhut \\t \\f \\r \\z"'''
+        expectedOut='''Illegal Escape In String: Nhut \\t \\f \\r \\z'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1805))
+

@@ -1,0 +1,7 @@
+
+        string b[3] <- [2 ... " tring" + "Nhut ne",foo("NhUT")]
+            var i <- 0
+            dynamic i
+            dynamic i <- 0
+            ## VO Tien
+        

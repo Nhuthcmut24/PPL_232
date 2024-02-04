@@ -1,0 +1,3 @@
+
+            var VoTien <- true >= "true" and 1 > 2
+        

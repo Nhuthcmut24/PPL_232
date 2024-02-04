@@ -1,0 +1,8 @@
+
+        func main()
+        func main(number f1)
+        func main(number a[5],boolean x[5,2,3], boolean a[5,2,3], string b, boolean c)
+        func main(number num1, number num2)
+        var VoTien <- 1
+        func main(number f1 <- c)
+        

@@ -1,0 +1,5 @@
+
+        boolean a[12,2]
+        boolean a[[1,2]]
+        bool a[1+1]
+        

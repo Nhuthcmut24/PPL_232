@@ -1,0 +1,5 @@
+
+        boolean a["string"]
+        boolean a[[1,2]]
+        boolean a[1+1]
+        

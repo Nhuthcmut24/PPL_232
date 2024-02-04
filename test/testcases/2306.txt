@@ -1,0 +1,8 @@
+string x <- "be ba ne \t"
+        func foo() begin
+        x <- 5 + 5 % 3 - 8 * 12 / 4
+        y <- "be ba " ... "ne"
+        z <- y = 5
+        t <- z != 5
+        end
+        

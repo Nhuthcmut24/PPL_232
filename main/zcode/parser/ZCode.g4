@@ -9,7 +9,7 @@ options {
 	language = Python3;
 }
 
-program: decllist EOF; // Chuong trinh bao gom nhieu khai bao
+program: newlinelist decllist EOF; // Chuong trinh bao gom nhieu khai bao
 
 decllist:
 	decl decllist
@@ -27,7 +27,7 @@ vardecl:
 	| dynamicdecl; // Co 3 cach khai bao bien
 
 typdecl:
-	typ ID (ASSIGN1_OPERATOR expr)? newlinelistnonull
+	typ ID ASSIGN1_OPERATOR expr newlinelistnonull | typ ID newlinelistnonull
 	| arraydecl; //Khai bao bien kieu nguyen thuy
 
 varkeydecl:
@@ -47,11 +47,14 @@ funcdecl:
 arraydecl:
 	typ ID LSB sizelist RSB (ASSIGN1_OPERATOR arrayvalue)? newlinelistnonull; //Khai bao array
 
+arrayparameter:
+	typ ID LSB sizelist RSB (ASSIGN1_OPERATOR arrayvalue)?; //Khai bao array
+
 arrayvalue:
 	arrayval
 	| arrayvallist; //Gia tri cua mang (co the 1 chieu hoac da chieu)
 
-arrayval: LSB sizelist RSB; //Gia tri array 1 chieu
+arrayval: LSB index RSB; //Gia tri array 1 chieu
 
 arrayvallist:
 	LSB listarrayval RSB; //List cac gia tri array 1 chieu
@@ -149,7 +152,7 @@ expr4:
 	expr4 (MUL_OPERATOR | DIV_OPERATOR | MODULO_OPERATOR) expr5
 	| expr5;
 
-expr5: expr6 NOT_OPERATOR expr5 | expr6;
+expr5: NOT_OPERATOR expr5 | expr6;
 
 expr6: SUB_OPERATOR expr6 | expr7;
 
@@ -160,7 +163,10 @@ expr8:
 	| funccallstmt
 	| literal
 	| arrayvalue // Co the phai sua
-	| indexoperator;
+	| indexoperator
+	| subexpr;
+
+subexpr: LB expr RB;
 
 indexoperator: (ID | funccallstmt) LSB indexope RSB;
 
@@ -170,7 +176,7 @@ argumentlist: argumentprime |; //Danh sach doi so (co the rong)
 
 argumentprime: argument COMMA argumentprime | argument;
 
-argument: literal;
+argument: expr;
 
 literal: STRINGLIT | NUMBER | ID | booleanvalue;
 
@@ -184,7 +190,9 @@ newlinelistnonull: NEW_LINE newlinelistnonull | NEW_LINE;
 
 lhs: ID | indexexpr | indexoperator; // 
 
-indexexpr: ID LSB sizelist RSB | ID LSB indexexpr RSB;
+indexexpr: ID LSB index RSB | ID LSB indexexpr RSB;
+
+index: expr COMMA index | expr;
 
 paralist:
 	LB parameterlist RB; //Danh sach tham so cua ham (co the rong) co ngoac
@@ -197,7 +205,7 @@ paraprime:
 	para COMMA paraprime
 	| para; //Danh sach tham so khong rong
 
-para: typ ID | typ ID LSB RSB; //tham so (nguyen thuy hoac array)
+para: typ ID | typ ID LSB RSB | arrayparameter; //tham so (nguyen thuy hoac array)
 
 //KEY WORD
 
