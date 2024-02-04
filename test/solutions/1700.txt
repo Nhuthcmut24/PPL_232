@@ -1,1 +1,1 @@
-He said:"How old are you?",<EOF>
+He said:'"How old are you?'",<EOF>

@@ -19,7 +19,7 @@ class LexerSuite(unittest.TestCase):
 
     def test_complex_string3(self):
         """test complex string2"""
-        self.assertTrue(TestLexer.test("\"PPL is the '\"best'\"\"","PPL is the \"best\",<EOF>",104))
+        self.assertTrue(TestLexer.test("\"PPL is the '\"best'\"\"","PPL is the '\"best'\",<EOF>",104))
         
     def test_simple_number(self):
         """test simple number"""
@@ -457,7 +457,7 @@ class LexerSuite(unittest.TestCase):
     def test_complex_lit2(self):
         """test complex literal"""
         input='''"He said:'"How old are you?'""'''
-        expectedOut='''He said:"How old are you?",<EOF>'''
+        expectedOut='''He said:'"How old are you?'",<EOF>'''
         self.assertTrue(TestLexer.test(input,expectedOut,1700))
 
     def test_complex_lit3(self):
@@ -527,3 +527,8 @@ class LexerSuite(unittest.TestCase):
         expectedOut='''Illegal Escape In String: Nhut \\t \\f \\r \\z'''
         self.assertTrue(TestLexer.test(input,expectedOut,1805))
 
+    def test_complex_literal_and_escape3(self):
+        """test complex literal and escape"""
+        input=""" "He asked me: \'"Where is John?\'"" """
+        expectedOut='''He asked me: '"Where is John?'",<EOF>'''
+        self.assertTrue(TestLexer.test(input,expectedOut,1806))

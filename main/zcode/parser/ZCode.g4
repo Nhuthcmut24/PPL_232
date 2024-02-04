@@ -319,7 +319,7 @@ fragment DECPART: '.' [0-9]*;
 fragment EXPPART: ('e' | 'E') ('+' | '-')? [0-9]+;
 
 STRINGLIT:
-	'"' (~["\n\\] | LI_ESCAPE | [']["])* '"' {self.text = self.text[1:-1].replace('\'"','"')};
+	'"' (~["\n\\] | LI_ESCAPE | [']["])* '"' {self.text = self.text[1:-1]};
 
 //ERROR
 
